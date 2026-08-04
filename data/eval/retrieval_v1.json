@@ -1,0 +1,460 @@
+[
+  {
+    "id": "freertos-periodic-delay-api",
+    "question": "FreeRTOS 固定周期任务应该使用 vTaskDelayUntil 还是 vTaskDelay？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelayUntil"],
+      ["fixed frequency", "fixed execution period"]
+    ]
+  },
+  {
+    "id": "freertos-relative-delay-drift",
+    "question": "为什么循环里使用 vTaskDelay 不能保证固定执行频率？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelay"],
+      ["relative"],
+      ["vTaskDelayUntil"]
+    ]
+  },
+  {
+    "id": "freertos-task-self-delete",
+    "question": "FreeRTOS 任务函数准备退出时，怎样用 vTaskDelete 删除自身？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelete"],
+      ["NULL"],
+      ["itself", "calling task"]
+    ]
+  },
+  {
+    "id": "freertos-task-name-purpose",
+    "question": "xTaskCreate 的 pcName 参数会参与调度吗，主要用途是什么？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["pcName"],
+      ["debugging aid"]
+    ]
+  },
+  {
+    "id": "freertos-created-task-handle-optional",
+    "question": "不需要任务句柄时，xTaskCreate 的 pxCreatedTask 能传什么？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["pxCreatedTask"],
+      ["optional"],
+      ["NULL"]
+    ]
+  },
+  {
+    "id": "freertos-highest-priority-ready-task",
+    "question": "FreeRTOS 调度器会从可运行任务中选择哪个优先级进入 Running 状态？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["highest priority"],
+      ["Running"]
+    ]
+  },
+  {
+    "id": "freertos-priority-cap",
+    "question": "xTaskCreate 传入超过 configMAX_PRIORITIES 的 uxPriority 会怎样？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["configMAX_PRIORITIES"],
+      ["capped"]
+    ]
+  },
+  {
+    "id": "freertos-ms-to-ticks",
+    "question": "FreeRTOS 中如何用 pdMS_TO_TICKS 把毫秒转换为 tick？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["pdMS_TO_TICKS"],
+      ["milliseconds"],
+      ["ticks"]
+    ]
+  },
+  {
+    "id": "freertos-suspended-state-api",
+    "question": "任务如何进入 Suspended 状态，又通过哪些 API 恢复？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskSuspend"],
+      ["vTaskResume", "xTaskResumeFromISR"]
+    ]
+  },
+  {
+    "id": "freertos-ready-state-definition",
+    "question": "FreeRTOS 的 Ready 状态与 Blocked、Suspended 有什么关系？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["Ready"],
+      ["Blocked"],
+      ["Suspended"]
+    ]
+  },
+  {
+    "id": "freertos-delay-blocks-task",
+    "question": "调用 vTaskDelay 后任务进入什么状态，延时期间是否占用处理时间？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelay"],
+      ["Blocked"],
+      ["does not use any processing time"]
+    ]
+  },
+  {
+    "id": "freertos-previous-wake-initialization",
+    "question": "第一次调用 vTaskDelayUntil 前，pxPreviousWakeTime 应如何初始化？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["pxPreviousWakeTime"],
+      ["current tick count"]
+    ]
+  },
+  {
+    "id": "freertos-idle-task-delete-cleanup",
+    "question": "任务用 vTaskDelete 删除自身后，为什么不能饿死 Idle task？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelete"],
+      ["Idle task"],
+      ["cleaning up kernel resources"]
+    ]
+  },
+  {
+    "id": "freertos-idle-hook-no-block",
+    "question": "Idle task hook 为什么不能阻塞或挂起自己？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["Idle task hook"],
+      ["must never attempt to block or suspend"]
+    ]
+  },
+  {
+    "id": "freertos-enable-idle-hook",
+    "question": "要让 Idle hook 被调用，FreeRTOSConfig.h 需要打开哪个配置？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["configUSE_IDLE_HOOK"],
+      ["set to 1"]
+    ]
+  },
+  {
+    "id": "nvs-commit-required",
+    "question": "调用 nvs_set 系列函数后为什么还要调用 nvs_commit？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["nvs_commit"],
+      ["not be updated", "written to non-volatile"]
+    ]
+  },
+  {
+    "id": "nvs-init-no-free-pages",
+    "question": "NVS 初始化时没有空页会返回哪个错误码？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["ESP_ERR_NVS_NO_FREE_PAGES"]
+    ]
+  },
+  {
+    "id": "nvs-default-partition-init",
+    "question": "哪个 API 用于初始化标签为 nvs 的默认 NVS 分区？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["nvs_flash_init"],
+      ["default NVS partition"],
+      ["label", "labeled"]
+    ]
+  },
+  {
+    "id": "nvs-specific-partition-init",
+    "question": "如何按分区标签初始化指定的 NVS 分区？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["nvs_flash_init_partition"],
+      ["specific NVS partition", "partition label"]
+    ]
+  },
+  {
+    "id": "nvs-key-length",
+    "question": "ESP-IDF NVS 的 key 最大允许多少个字符？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["maximum key length"],
+      ["15 characters"]
+    ]
+  },
+  {
+    "id": "nvs-large-values-storage",
+    "question": "大量大字符串或 blob 是否适合放进 NVS，官方建议用什么替代？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["large blobs or strings"],
+      ["FAT filesystem"],
+      ["wear levelling"]
+    ]
+  },
+  {
+    "id": "nvs-namespace-limits",
+    "question": "一个 NVS 分区最多能有多少 namespace，名称最长多少字符？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["254"],
+      ["15 characters"],
+      ["namespace"]
+    ]
+  },
+  {
+    "id": "nvs-readonly-mode",
+    "question": "使用 NVS_READONLY 打开 namespace 后，写操作会怎样？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["NVS_READONLY"],
+      ["write operations"],
+      ["rejected"]
+    ]
+  },
+  {
+    "id": "nvs-readwrite-purge-mode",
+    "question": "NVS_READWRITE_PURGE 与普通读写模式的安全差异是什么？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["NVS_READWRITE_PURGE"],
+      ["physically purged"]
+    ]
+  },
+  {
+    "id": "nvs-iterator-release",
+    "question": "使用 nvs_entry_find 创建迭代器后应该怎样释放？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["nvs_entry_find"],
+      ["nvs_release_iterator"]
+    ]
+  },
+  {
+    "id": "nvs-encryption-erase-boundary",
+    "question": "启用 NVS encryption 后能否防止攻击者直接擦除数据？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["NVS encryption"],
+      ["no tamper-resistance"],
+      ["erase operation"]
+    ]
+  },
+  {
+    "id": "nvs-power-loss-guarantee",
+    "question": "写 NVS 键值对时突然断电，哪部分数据仍可能丢失？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["power off"],
+      ["new key-value pair"],
+      ["being written"]
+    ]
+  },
+  {
+    "id": "nvs-large-partition-ram-cost",
+    "question": "1 MB NVS flash 分区大约会消耗多少 RAM？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["1 MB"],
+      ["22 KB"],
+      ["RAM"]
+    ]
+  },
+  {
+    "id": "nvs-verify-erase",
+    "question": "不稳定供电环境下，哪个 Kconfig 选项会回读验证 flash erase？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["CONFIG_NVS_FLASH_VERIFY_ERASE"],
+      ["0xFF"],
+      ["retried"]
+    ]
+  },
+  {
+    "id": "nvs-factory-default-partition",
+    "question": "为什么关键出厂默认值建议放在独立只读 NVS 分区？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["factory default data"],
+      ["read-only partition"],
+      ["recovery is not performed"]
+    ]
+  },
+  {
+    "id": "wifi-got-ip-before-sockets",
+    "question": "ESP-IDF Station 连接 AP 后，启动 MQTT 或创建 socket 应等待哪个事件？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["IP_EVENT_STA_GOT_IP"],
+      ["creating sockets", "socket"]
+    ]
+  },
+  {
+    "id": "wifi-disconnect-no-unconditional-reconnect",
+    "question": "为什么收到 WIFI_EVENT_STA_DISCONNECTED 后不能总是无条件调用 esp_wifi_connect？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_EVENT_STA_DISCONNECTED"],
+      ["esp_wifi_disconnect"],
+      ["should not call"],
+      ["esp_wifi_connect"]
+    ]
+  },
+  {
+    "id": "wifi-ready-event-unused",
+    "question": "应用是否需要处理 WIFI_EVENT_WIFI_READY 事件？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_EVENT_WIFI_READY"],
+      ["never generate"],
+      ["ignored"]
+    ]
+  },
+  {
+    "id": "wifi-scan-done-fetch-records",
+    "question": "收到 WIFI_EVENT_SCAN_DONE 后，怎样取出 AP 列表并释放驱动内部内存？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["esp_wifi_scan_get_ap_num"],
+      ["esp_wifi_scan_get_ap_records"],
+      ["free"]
+    ]
+  },
+  {
+    "id": "wifi-sta-start-connect",
+    "question": "收到 WIFI_EVENT_STA_START 后，应用通常调用哪个 API 连接 AP？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_EVENT_STA_START"],
+      ["esp_wifi_connect"]
+    ]
+  },
+  {
+    "id": "wifi-connected-dhcp-boundary",
+    "question": "WIFI_EVENT_STA_CONNECTED 出现时是否已经拿到 IP，LwIP 应用还要等什么？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_EVENT_STA_CONNECTED"],
+      ["DHCP"],
+      ["got ip"]
+    ]
+  },
+  {
+    "id": "wifi-lost-ip-timer",
+    "question": "Wi-Fi 断开后为什么 IP_EVENT_STA_LOST_IP 不会立即出现？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["IP_EVENT_STA_LOST_IP"],
+      ["lost timer"],
+      ["expires"]
+    ]
+  },
+  {
+    "id": "wifi-passive-scan-beacon",
+    "question": "ESP-IDF passive scan 会发送 probe request 吗，它如何发现 AP？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["Passive Scan"],
+      ["No probe request"],
+      ["beacon"]
+    ]
+  },
+  {
+    "id": "wifi-blocked-scan-event",
+    "question": "esp_wifi_scan_start 的 block=true 会怎样，完成时是否产生 scan-done event？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["block parameter"],
+      ["application task will be blocked"],
+      ["no scan-done event"]
+    ]
+  },
+  {
+    "id": "wifi-connect-scan-event",
+    "question": "esp_wifi_connect 内部扫描结束后会产生 WIFI_EVENT_SCAN_DONE 吗？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["esp_wifi_connect"],
+      ["no scan-done event"]
+    ]
+  },
+  {
+    "id": "wifi-concurrent-scan",
+    "question": "多个任务能否同时调用 esp_wifi_scan_start 并依赖并发扫描？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["multiple concurrent scans"],
+      ["should be avoided"]
+    ]
+  },
+  {
+    "id": "wifi-wrong-password-reason",
+    "question": "连接加密 AP 时密码错误，哪个 reason code 可能表示四次握手超时？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["4WAY_HANDSHAKE_TIMEOUT"],
+      ["wrong password"],
+      ["15"]
+    ]
+  },
+  {
+    "id": "wifi-low-rssi-reason",
+    "question": "目标 AP 存在但低于 RSSI 阈值时可能返回哪个 Wi-Fi reason code？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["NO_AP_FOUND_IN_RSSI_THRESHOLD"],
+      ["low RSSI"],
+      ["212"]
+    ]
+  },
+  {
+    "id": "wifi-default-power-save",
+    "question": "ESP-IDF Station 默认的 Modem-sleep 模式是什么，如何完全关闭？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_PS_MIN_MODEM"],
+      ["WIFI_PS_NONE"],
+      ["default"]
+    ]
+  },
+  {
+    "id": "wifi-raw-tx-frame-limit",
+    "question": "esp_wifi_80211_tx 能否发送加密帧或 QoS 帧？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["esp_wifi_80211_tx"],
+      ["cannot"],
+      ["encrypted"],
+      ["QoS"]
+    ]
+  },
+  {
+    "id": "unanswerable-stm32-uart-dma",
+    "question": "STM32 HAL UART DMA 半传输完成回调函数名是什么？",
+    "expected_answerable": false
+  },
+  {
+    "id": "unanswerable-zephyr-devicetree",
+    "question": "Zephyr devicetree overlay 中 aliases 节点怎么写？",
+    "expected_answerable": false
+  },
+  {
+    "id": "unanswerable-canopen-heartbeat",
+    "question": "CANopen Heartbeat Consumer 的对象字典索引是多少？",
+    "expected_answerable": false
+  },
+  {
+    "id": "unanswerable-lvgl-flush",
+    "question": "LVGL 9 的 display flush callback 应该怎样注册？",
+    "expected_answerable": false
+  },
+  {
+    "id": "unanswerable-linux-kernel-module",
+    "question": "Linux 内核模块的 module_init 宏最终放进哪个 ELF section？",
+    "expected_answerable": false
+  }
+]

@@ -1,0 +1,712 @@
+{
+  "top_k": 3,
+  "question_count": 50,
+  "answerable_count": 45,
+  "unanswerable_count": 5,
+  "hit_at_k": 0.4889,
+  "mrr": 0.437,
+  "abstention_accuracy": 0.8,
+  "overall_accuracy": 0.52,
+  "results": [
+    {
+      "question_id": "freertos-periodic-delay-api",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0052",
+        "freertos-task-delay:0050",
+        "freertos-task-delay:0057"
+      ]
+    },
+    {
+      "question_id": "freertos-relative-delay-drift",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-task-self-delete",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-task-name-purpose",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-created-task-handle-optional",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-highest-priority-ready-task",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-priority-cap",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0011",
+        "freertos-task-delay:0026",
+        "freertos-task-delay:0067"
+      ]
+    },
+    {
+      "question_id": "freertos-ms-to-ticks",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0031",
+        "freertos-task-delay:0044",
+        "freertos-task-delay:0032"
+      ]
+    },
+    {
+      "question_id": "freertos-suspended-state-api",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-ready-state-definition",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0041",
+        "freertos-task-delay:0087",
+        "freertos-task-delay:0040"
+      ]
+    },
+    {
+      "question_id": "freertos-delay-blocks-task",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-previous-wake-initialization",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-idle-task-delete-cleanup",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-idle-hook-no-block",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "freertos-enable-idle-hook",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0064",
+        "freertos-task-delay:0060",
+        "freertos-task-delay:0062"
+      ]
+    },
+    {
+      "question_id": "nvs-commit-required",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0071",
+        "esp-idf-nvs:0075",
+        "esp-idf-nvs:0095"
+      ]
+    },
+    {
+      "question_id": "nvs-init-no-free-pages",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-default-partition-init",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-specific-partition-init",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-key-length",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": false,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0067",
+        "esp-idf-nvs:0099",
+        "esp-idf-nvs:0080"
+      ]
+    },
+    {
+      "question_id": "nvs-large-values-storage",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-namespace-limits",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-readonly-mode",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0091",
+        "esp-idf-nvs:0008",
+        "esp-idf-nvs:0089"
+      ]
+    },
+    {
+      "question_id": "nvs-readwrite-purge-mode",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-iterator-release",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0011",
+        "esp-idf-nvs:0010",
+        "esp-idf-nvs:0119"
+      ]
+    },
+    {
+      "question_id": "nvs-encryption-erase-boundary",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-power-loss-guarantee",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-large-partition-ram-cost",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0015",
+        "esp-idf-nvs:0016",
+        "esp-idf-nvs:0024"
+      ]
+    },
+    {
+      "question_id": "nvs-verify-erase",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "nvs-factory-default-partition",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "wifi-got-ip-before-sockets",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0049",
+        "esp-idf-wifi-events:0030",
+        "esp-idf-wifi-events:0041"
+      ]
+    },
+    {
+      "question_id": "wifi-disconnect-no-unconditional-reconnect",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": false,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0050",
+        "esp-idf-wifi-events:0027",
+        "esp-idf-wifi-events:0067"
+      ]
+    },
+    {
+      "question_id": "wifi-ready-event-unused",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0022",
+        "esp-idf-wifi-events:0026",
+        "esp-idf-wifi-events:0031"
+      ]
+    },
+    {
+      "question_id": "wifi-scan-done-fetch-records",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0062",
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0064"
+      ]
+    },
+    {
+      "question_id": "wifi-sta-start-connect",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0033",
+        "esp-idf-wifi-events:0024",
+        "esp-idf-wifi-events:0047"
+      ]
+    },
+    {
+      "question_id": "wifi-connected-dhcp-boundary",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0026",
+        "esp-idf-wifi-events:0041",
+        "esp-idf-wifi-events:0049"
+      ]
+    },
+    {
+      "question_id": "wifi-lost-ip-timer",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0032",
+        "esp-idf-wifi-events:0041",
+        "esp-idf-wifi-events:0049"
+      ]
+    },
+    {
+      "question_id": "wifi-passive-scan-beacon",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0056",
+        "esp-idf-wifi-events:0037",
+        "esp-idf-wifi-events:0165"
+      ]
+    },
+    {
+      "question_id": "wifi-blocked-scan-event",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0068",
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0069"
+      ]
+    },
+    {
+      "question_id": "wifi-connect-scan-event",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0062",
+        "esp-idf-wifi-events:0067"
+      ]
+    },
+    {
+      "question_id": "wifi-concurrent-scan",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0069",
+        "esp-idf-wifi-events:0055",
+        "esp-idf-wifi-events:0023"
+      ]
+    },
+    {
+      "question_id": "wifi-wrong-password-reason",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "wifi-low-rssi-reason",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0092",
+        "esp-idf-wifi-events:0090",
+        "esp-idf-wifi-events:0074"
+      ]
+    },
+    {
+      "question_id": "wifi-default-power-save",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0150",
+        "esp-idf-wifi-events:0151",
+        "esp-idf-wifi-events:0152"
+      ]
+    },
+    {
+      "question_id": "wifi-raw-tx-frame-limit",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0165",
+        "esp-idf-wifi-events:0166",
+        "esp-idf-wifi-events:0169"
+      ]
+    },
+    {
+      "question_id": "unanswerable-stm32-uart-dma",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-zephyr-devicetree",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-canopen-heartbeat",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-lvgl-flush",
+      "expected_answerable": false,
+      "passed": false,
+      "hit": false,
+      "abstained": false,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0069",
+        "esp-idf-nvs:0067",
+        "esp-idf-wifi-events:0193"
+      ]
+    },
+    {
+      "question_id": "unanswerable-linux-kernel-module",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    }
+  ]
+}

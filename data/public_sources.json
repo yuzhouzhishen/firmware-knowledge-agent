@@ -1,0 +1,23 @@
+[
+  {
+    "id": "freertos-task-delay",
+    "title": "FreeRTOS Kernel Book - Task Management",
+    "source_url": "https://raw.githubusercontent.com/FreeRTOS/FreeRTOS-Kernel-Book/main/ch04.md",
+    "version": "main",
+    "license_note": "Official public documentation; verify redistribution terms before publishing fetched content."
+  },
+  {
+    "id": "esp-idf-nvs",
+    "title": "ESP-IDF Non-Volatile Storage Library",
+    "source_url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/storage/nvs_flash.html",
+    "version": "latest",
+    "license_note": "Official public documentation; verify redistribution terms before publishing fetched content."
+  },
+  {
+    "id": "esp-idf-wifi-events",
+    "title": "ESP-IDF Wi-Fi Driver Guide",
+    "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.3/docs/en/api-guides/wifi.rst",
+    "version": "v5.5.3",
+    "license_note": "Official public documentation; verify redistribution terms before publishing fetched content."
+  }
+]

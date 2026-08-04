@@ -1,0 +1,162 @@
+[
+  {
+    "id": "holdout-freertos-stack-depth-units",
+    "question": "xTaskCreate 的 usStackDepth 单位是字节还是 word？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["usStackDepth"],
+      ["number of words"],
+      ["number of bytes"]
+    ]
+  },
+  {
+    "id": "holdout-freertos-create-return-values",
+    "question": "xTaskCreate 创建成功和堆内存不足时分别返回什么？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["pdPASS"],
+      ["pdFAIL"],
+      ["heap memory"]
+    ]
+  },
+  {
+    "id": "holdout-freertos-blocked-event-types",
+    "question": "FreeRTOS 任务进入 Blocked 状态等待的事件可分成哪两类？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["Blocked"],
+      ["temporal"],
+      ["synchronization"]
+    ]
+  },
+  {
+    "id": "holdout-freertos-priority-set-config",
+    "question": "要使用 vTaskPrioritySet，需要在 FreeRTOSConfig.h 打开什么配置？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskPrioritySet"],
+      ["INCLUDE_vTaskPrioritySet"],
+      ["set to 1"]
+    ]
+  },
+  {
+    "id": "holdout-freertos-delete-owned-resources",
+    "question": "vTaskDelete 后，任务自己申请的内存会被内核自动释放吗？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["Only memory allocated to a task by the kernel"],
+      ["must be freed explicitly"]
+    ]
+  },
+  {
+    "id": "holdout-nvs-small-values",
+    "question": "NVS 更适合存许多小值，还是少量大字符串和 blob？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["works best"],
+      ["many small values"],
+      ["large values"]
+    ]
+  },
+  {
+    "id": "holdout-nvs-string-size",
+    "question": "NVS string 当前最大多少字节，是否包含结尾的 null？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["4000 bytes"],
+      ["null terminator"]
+    ]
+  },
+  {
+    "id": "holdout-nvs-same-namespace-different-partitions",
+    "question": "不同 NVS 分区里同名 namespace 会被视为同一个吗？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["same name"],
+      ["different NVS partitions"],
+      ["separate namespaces"]
+    ]
+  },
+  {
+    "id": "holdout-nvs-init-time",
+    "question": "NVS 中已有 1000 个 key 时，初始化通常大约需要多久？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["0.5 seconds"],
+      ["1000 keys"]
+    ]
+  },
+  {
+    "id": "holdout-nvs-psram-cost",
+    "question": "CONFIG_NVS_ALLOCATE_CACHE_IN_SPIRAM 对整数 NVS API 性能有什么代价？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["CONFIG_NVS_ALLOCATE_CACHE_IN_SPIRAM"],
+      ["2.5"]
+    ]
+  },
+  {
+    "id": "holdout-wifi-all-channel-scan",
+    "question": "wifi_scan_config_t 的 channel 设为 0 表示哪种扫描？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["channel"],
+      ["0"],
+      ["all-channel scan"]
+    ]
+  },
+  {
+    "id": "holdout-wifi-hidden-ssid",
+    "question": "Wi-Fi 扫描配置 show_hidden=0 时如何处理隐藏 SSID？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["show_hidden"],
+      ["hidden SSID"],
+      ["ignores"]
+    ]
+  },
+  {
+    "id": "holdout-wifi-background-home-channel",
+    "question": "全信道后台扫描为什么会回到 home channel 30 ms？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["home channel"],
+      ["30 ms"],
+      ["transmit/receive data"]
+    ]
+  },
+  {
+    "id": "holdout-wifi-beacon-timeout-probes",
+    "question": "Station beacon timeout 后会先发送多少次 probe request？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["beacon times out"],
+      ["5 probe requests"]
+    ]
+  },
+  {
+    "id": "holdout-wifi-sniffer-callback",
+    "question": "wifi_promiscuous_cb_t 中有大量处理时，为什么应把工作投递到应用任务？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["wifi_promiscuous_cb_t"],
+      ["Wi-Fi driver task"],
+      ["defer the real work"]
+    ]
+  },
+  {
+    "id": "holdout-unanswerable-threadx-event-flags",
+    "question": "ThreadX 的 tx_event_flags_get 各个 wait option 有什么区别？",
+    "expected_answerable": false
+  },
+  {
+    "id": "holdout-unanswerable-usb-pd-pps",
+    "question": "USB PD PPS APDO 的电压步进单位是多少？",
+    "expected_answerable": false
+  },
+  {
+    "id": "holdout-unanswerable-rust-embassy",
+    "question": "Rust Embassy executor 的 task arena 如何配置？",
+    "expected_answerable": false
+  }
+]

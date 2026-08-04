@@ -1,0 +1,13 @@
+.venv/
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.uv-python/
+__pycache__/
+*.py[cod]
+*.egg-info/
+CACHEDIR.TAG
+.env
+var/
+.DS_Store

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "freertos-task-delay",
+    "title": "FreeRTOS 任务延时与周期执行",
+    "path": "freertos-task-delay.md",
+    "source_url": "https://www.freertos.org/Documentation/02-Kernel/04-API-references/02-Task-control/03-xTaskDelayUntil",
+    "version": "public-doc-summary-2026-08",
+    "license_note": "Original study summary with an official documentation link."
+  },
+  {
+    "id": "esp-idf-nvs",
+    "title": "ESP-IDF NVS 配置存储",
+    "path": "esp-idf-nvs.md",
+    "source_url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/storage/nvs_flash.html",
+    "version": "public-doc-summary-2026-08",
+    "license_note": "Original study summary with an official documentation link."
+  },
+  {
+    "id": "esp-idf-wifi-events",
+    "title": "ESP-IDF Wi-Fi 事件与重连",
+    "path": "esp-idf-wifi-events.md",
+    "source_url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/wifi-driver/index.html",
+    "version": "public-doc-summary-2026-08",
+    "license_note": "Original study summary with an official documentation link."
+  }
+]

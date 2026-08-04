@@ -1,0 +1,57 @@
+[
+  {
+    "id": "delay-periodic-api",
+    "question": "FreeRTOS 固定周期任务应该使用哪个延时 API？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelayUntil", "xTaskDelayUntil"],
+      ["periodic", "固定周期"]
+    ]
+  },
+  {
+    "id": "delay-drift",
+    "question": "为什么循环里使用 vTaskDelay 可能产生周期漂移？",
+    "expected_source_ids": ["freertos-task-delay"],
+    "expected_content_term_groups": [
+      ["vTaskDelay"],
+      ["vTaskDelayUntil", "xTaskDelayUntil"],
+      ["relative", "相对", "漂移"]
+    ]
+  },
+  {
+    "id": "nvs-commit",
+    "question": "调用 nvs_set 以后为什么还要 nvs_commit？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["nvs_commit"],
+      ["not be updated", "written to non-volatile", "持久化"]
+    ]
+  },
+  {
+    "id": "nvs-init-error",
+    "question": "NVS 初始化没有可用页时返回什么错误？",
+    "expected_source_ids": ["esp-idf-nvs"],
+    "expected_content_term_groups": [
+      ["ESP_ERR_NVS_NO_FREE_PAGES", "没有可用页"]
+    ]
+  },
+  {
+    "id": "wifi-got-ip",
+    "question": "Wi-Fi 连接 AP 后是否可以立刻启动 MQTT？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["IP_EVENT_STA_GOT_IP", "获得 IP"],
+      ["socket", "MQTT", "TCP"]
+    ]
+  },
+  {
+    "id": "wifi-reconnect",
+    "question": "ESP-IDF 断线重连为什么不能在所有断开事件里无条件执行？",
+    "expected_source_ids": ["esp-idf-wifi-events"],
+    "expected_content_term_groups": [
+      ["WIFI_EVENT_STA_DISCONNECTED", "断开事件"],
+      ["esp_wifi_disconnect", "主动调用"],
+      ["should not call", "不应该"]
+    ]
+  }
+]

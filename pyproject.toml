@@ -1,0 +1,47 @@
+[project]
+name = "firmware-knowledge-agent"
+version = "0.3.0"
+description = "An evaluated RAG assistant for embedded firmware documentation."
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "beautifulsoup4>=4.13.0",
+    "cryptography>=49.0.0,<50.0.0",
+    "fastapi>=0.115.0",
+    "langchain-google-genai>=4.3.2",
+    "langchain-text-splitters>=1.0.0",
+    "langgraph>=1.0.0",
+    "pydantic>=2.7.0",
+    "pypdf>=6.0.0,<7.0.0",
+    "python-dotenv>=1.0.1",
+    "python-docx>=1.2.0,<2.0.0",
+    "python-multipart>=0.0.20",
+    "qdrant-client>=1.14.0,<2.0.0",
+    "rank-bm25>=0.2.2",
+    "requests>=2.32.0",
+    "uvicorn>=0.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx2>=2.9.0",
+    "pytest>=8.0.0",
+]
+rerank = [
+    "huggingface-hub>=0.32.0,<2.0.0",
+    "onnxruntime>=1.22.0,<1.24.0",
+    "transformers>=4.51.0,<6.0.0",
+]
+
+[project.scripts]
+firmware-rag = "firmware_knowledge_agent.cli:main"
+firmware-rag-eval = "firmware_knowledge_agent.evaluation:main"
+firmware-rag-ingest-local = "firmware_knowledge_agent.local_ingestion:main"
+firmware-rag-ingest-public = "firmware_knowledge_agent.public_ingestion:main"
+
+[build-system]
+requires = ["setuptools>=70.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

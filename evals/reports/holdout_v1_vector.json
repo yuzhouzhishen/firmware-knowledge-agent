@@ -1,0 +1,296 @@
+{
+  "top_k": 3,
+  "question_count": 18,
+  "answerable_count": 15,
+  "unanswerable_count": 3,
+  "hit_at_k": 0.8667,
+  "mrr": 0.8,
+  "abstention_accuracy": 1.0,
+  "overall_accuracy": 0.8889,
+  "results": [
+    {
+      "question_id": "holdout-freertos-stack-depth-units",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0010",
+        "freertos-task-delay:0011",
+        "freertos-task-delay:0009"
+      ]
+    },
+    {
+      "question_id": "holdout-freertos-create-return-values",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0012",
+        "freertos-task-delay:0017",
+        "freertos-task-delay:0025"
+      ]
+    },
+    {
+      "question_id": "holdout-freertos-blocked-event-types",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0038",
+        "freertos-task-delay:0039",
+        "freertos-task-delay:0042"
+      ]
+    },
+    {
+      "question_id": "holdout-freertos-priority-set-config",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0067",
+        "freertos-task-delay:0066",
+        "freertos-task-delay:0026"
+      ]
+    },
+    {
+      "question_id": "holdout-freertos-delete-owned-resources",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0077",
+        "freertos-task-delay:0079",
+        "freertos-task-delay:0082"
+      ]
+    },
+    {
+      "question_id": "holdout-nvs-small-values",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0006",
+        "esp-idf-nvs:0015",
+        "esp-idf-nvs:0003"
+      ]
+    },
+    {
+      "question_id": "holdout-nvs-string-size",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0006",
+        "esp-idf-nvs:0084",
+        "esp-idf-nvs:0015"
+      ]
+    },
+    {
+      "question_id": "holdout-nvs-same-namespace-different-partitions",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0008",
+        "esp-idf-nvs:0009"
+      ]
+    },
+    {
+      "question_id": "holdout-nvs-init-time",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0015",
+        "esp-idf-nvs:0047",
+        "esp-idf-nvs:0046"
+      ]
+    },
+    {
+      "question_id": "holdout-nvs-psram-cost",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0016",
+        "esp-idf-nvs:0051",
+        "esp-idf-nvs:0058"
+      ]
+    },
+    {
+      "question_id": "holdout-wifi-all-channel-scan",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": false,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0057",
+        "esp-idf-wifi-events:0065",
+        "esp-idf-wifi-events:0063"
+      ]
+    },
+    {
+      "question_id": "holdout-wifi-hidden-ssid",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0058",
+        "esp-idf-wifi-events:0129",
+        "esp-idf-wifi-events:0065"
+      ]
+    },
+    {
+      "question_id": "holdout-wifi-background-home-channel",
+      "expected_answerable": true,
+      "passed": false,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "holdout-wifi-beacon-timeout-probes",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0095",
+        "esp-idf-wifi-events:0038"
+      ]
+    },
+    {
+      "question_id": "holdout-wifi-sniffer-callback",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0173"
+      ]
+    },
+    {
+      "question_id": "holdout-unanswerable-threadx-event-flags",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "holdout-unanswerable-usb-pd-pps",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "holdout-unanswerable-rust-embassy",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    }
+  ]
+}

@@ -1,0 +1,866 @@
+{
+  "top_k": 3,
+  "question_count": 50,
+  "answerable_count": 45,
+  "unanswerable_count": 5,
+  "hit_at_k": 1.0,
+  "mrr": 0.8593,
+  "abstention_accuracy": 1.0,
+  "overall_accuracy": 1.0,
+  "results": [
+    {
+      "question_id": "freertos-periodic-delay-api",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0052",
+        "freertos-task-delay:0050",
+        "freertos-task-delay:0058"
+      ]
+    },
+    {
+      "question_id": "freertos-relative-delay-drift",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0052",
+        "freertos-task-delay:0043",
+        "freertos-task-delay:0058"
+      ]
+    },
+    {
+      "question_id": "freertos-task-self-delete",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0077",
+        "freertos-task-delay:0078",
+        "freertos-task-delay:0081"
+      ]
+    },
+    {
+      "question_id": "freertos-task-name-purpose",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0022",
+        "freertos-task-delay:0010",
+        "freertos-task-delay:0045"
+      ]
+    },
+    {
+      "question_id": "freertos-created-task-handle-optional",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0012",
+        "freertos-task-delay:0009",
+        "freertos-task-delay:0022"
+      ]
+    },
+    {
+      "question_id": "freertos-highest-priority-ready-task",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0026",
+        "freertos-task-delay:0069",
+        "freertos-task-delay:0035"
+      ]
+    },
+    {
+      "question_id": "freertos-priority-cap",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0074",
+        "freertos-task-delay:0011",
+        "freertos-task-delay:0026"
+      ]
+    },
+    {
+      "question_id": "freertos-ms-to-ticks",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0031",
+        "freertos-task-delay:0032",
+        "freertos-task-delay:0052"
+      ]
+    },
+    {
+      "question_id": "freertos-suspended-state-api",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0040"
+      ]
+    },
+    {
+      "question_id": "freertos-ready-state-definition",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0041",
+        "freertos-task-delay:0087",
+        "freertos-task-delay:0038"
+      ]
+    },
+    {
+      "question_id": "freertos-delay-blocks-task",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0044",
+        "freertos-task-delay:0046",
+        "freertos-task-delay:0043"
+      ]
+    },
+    {
+      "question_id": "freertos-previous-wake-initialization",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0051",
+        "freertos-task-delay:0050",
+        "freertos-task-delay:0053"
+      ]
+    },
+    {
+      "question_id": "freertos-idle-task-delete-cleanup",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0077",
+        "freertos-task-delay:0079",
+        "freertos-task-delay:0062"
+      ]
+    },
+    {
+      "question_id": "freertos-idle-hook-no-block",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0062",
+        "freertos-task-delay:0063",
+        "freertos-task-delay:0061"
+      ]
+    },
+    {
+      "question_id": "freertos-enable-idle-hook",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "freertos-task-delay",
+        "freertos-task-delay",
+        "freertos-task-delay"
+      ],
+      "retrieved_chunk_ids": [
+        "freertos-task-delay:0064",
+        "freertos-task-delay:0063",
+        "freertos-task-delay:0062"
+      ]
+    },
+    {
+      "question_id": "nvs-commit-required",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0071",
+        "esp-idf-nvs:0104",
+        "esp-idf-nvs:0075"
+      ]
+    },
+    {
+      "question_id": "nvs-init-no-free-pages",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0122",
+        "esp-idf-nvs:0054",
+        "esp-idf-nvs:0048"
+      ]
+    },
+    {
+      "question_id": "nvs-default-partition-init",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0004",
+        "esp-idf-nvs:0046",
+        "esp-idf-nvs:0050"
+      ]
+    },
+    {
+      "question_id": "nvs-specific-partition-init",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0004",
+        "esp-idf-nvs:0050",
+        "esp-idf-nvs:0053"
+      ]
+    },
+    {
+      "question_id": "nvs-key-length",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0006",
+        "esp-idf-nvs:0008",
+        "esp-idf-nvs:0020"
+      ]
+    },
+    {
+      "question_id": "nvs-large-values-storage",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0006",
+        "esp-idf-nvs:0015",
+        "esp-idf-nvs:0036"
+      ]
+    },
+    {
+      "question_id": "nvs-namespace-limits",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0008",
+        "esp-idf-nvs:0006",
+        "esp-idf-nvs:0015"
+      ]
+    },
+    {
+      "question_id": "nvs-readonly-mode",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0008",
+        "esp-idf-nvs:0086",
+        "esp-idf-nvs:0009"
+      ]
+    },
+    {
+      "question_id": "nvs-readwrite-purge-mode",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0009",
+        "esp-idf-nvs:0014",
+        "esp-idf-nvs:0013"
+      ]
+    },
+    {
+      "question_id": "nvs-iterator-release",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0011",
+        "esp-idf-nvs:0010",
+        "esp-idf-nvs:0118"
+      ]
+    },
+    {
+      "question_id": "nvs-encryption-erase-boundary",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0020",
+        "esp-idf-nvs:0047",
+        "esp-idf-nvs:0012"
+      ]
+    },
+    {
+      "question_id": "nvs-power-loss-guarantee",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0018",
+        "esp-idf-nvs:0026",
+        "esp-idf-nvs:0012"
+      ]
+    },
+    {
+      "question_id": "nvs-large-partition-ram-cost",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0015",
+        "esp-idf-nvs:0016",
+        "esp-idf-nvs:0051"
+      ]
+    },
+    {
+      "question_id": "nvs-verify-erase",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0017",
+        "esp-idf-nvs:0028"
+      ]
+    },
+    {
+      "question_id": "nvs-factory-default-partition",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-nvs",
+        "esp-idf-nvs",
+        "esp-idf-nvs"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-nvs:0046",
+        "esp-idf-nvs:0018",
+        "esp-idf-nvs:0040"
+      ]
+    },
+    {
+      "question_id": "wifi-got-ip-before-sockets",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0030",
+        "esp-idf-wifi-events:0026",
+        "esp-idf-wifi-events:0049"
+      ]
+    },
+    {
+      "question_id": "wifi-disconnect-no-unconditional-reconnect",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0028",
+        "esp-idf-wifi-events:0027",
+        "esp-idf-wifi-events:0029"
+      ]
+    },
+    {
+      "question_id": "wifi-ready-event-unused",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0022",
+        "esp-idf-wifi-events:0011",
+        "esp-idf-wifi-events:0033"
+      ]
+    },
+    {
+      "question_id": "wifi-scan-done-fetch-records",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0062",
+        "esp-idf-wifi-events:0074"
+      ]
+    },
+    {
+      "question_id": "wifi-sta-start-connect",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0024",
+        "esp-idf-wifi-events:0033",
+        "esp-idf-wifi-events:0035"
+      ]
+    },
+    {
+      "question_id": "wifi-connected-dhcp-boundary",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0026",
+        "esp-idf-wifi-events:0049",
+        "esp-idf-wifi-events:0024"
+      ]
+    },
+    {
+      "question_id": "wifi-lost-ip-timer",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0032",
+        "esp-idf-wifi-events:0027",
+        "esp-idf-wifi-events:0051"
+      ]
+    },
+    {
+      "question_id": "wifi-passive-scan-beacon",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0056",
+        "esp-idf-wifi-events:0055",
+        "esp-idf-wifi-events:0067"
+      ]
+    },
+    {
+      "question_id": "wifi-blocked-scan-event",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0068",
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0069"
+      ]
+    },
+    {
+      "question_id": "wifi-connect-scan-event",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.5,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0023",
+        "esp-idf-wifi-events:0067",
+        "esp-idf-wifi-events:0048"
+      ]
+    },
+    {
+      "question_id": "wifi-concurrent-scan",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0069",
+        "esp-idf-wifi-events:0068",
+        "esp-idf-wifi-events:0070"
+      ]
+    },
+    {
+      "question_id": "wifi-wrong-password-reason",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0091",
+        "esp-idf-wifi-events:0083",
+        "esp-idf-wifi-events:0087"
+      ]
+    },
+    {
+      "question_id": "wifi-low-rssi-reason",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0092",
+        "esp-idf-wifi-events:0090",
+        "esp-idf-wifi-events:0078"
+      ]
+    },
+    {
+      "question_id": "wifi-default-power-save",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 0.3333333333333333,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0150",
+        "esp-idf-wifi-events:0151",
+        "esp-idf-wifi-events:0152"
+      ]
+    },
+    {
+      "question_id": "wifi-raw-tx-frame-limit",
+      "expected_answerable": true,
+      "passed": true,
+      "hit": true,
+      "abstained": false,
+      "reciprocal_rank": 1.0,
+      "retrieved_source_ids": [
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events",
+        "esp-idf-wifi-events"
+      ],
+      "retrieved_chunk_ids": [
+        "esp-idf-wifi-events:0165",
+        "esp-idf-wifi-events:0166",
+        "esp-idf-wifi-events:0003"
+      ]
+    },
+    {
+      "question_id": "unanswerable-stm32-uart-dma",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-zephyr-devicetree",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-canopen-heartbeat",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-lvgl-flush",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    },
+    {
+      "question_id": "unanswerable-linux-kernel-module",
+      "expected_answerable": false,
+      "passed": true,
+      "hit": false,
+      "abstained": true,
+      "reciprocal_rank": 0.0,
+      "retrieved_source_ids": [],
+      "retrieved_chunk_ids": []
+    }
+  ]
+}
