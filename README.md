@@ -125,6 +125,27 @@ ollama pull llama3.1:8b
 UV_CACHE_DIR=.uv-cache uv sync --extra dev
 ```
 
+完整的双项目离线演示由同级 `device-agent-lab` 提供：
+
+```bash
+../device-agent-lab/scripts/run_mock_stack.py
+```
+
+该命令固定使用本仓库的公开样例语料、BM25 和抽取式生成，不需要 Ollama、API
+Key 或私有语料；同时启动 DeviceOps Mock 设备并完成两边健康检查。
+
+无需占用端口的跨项目闭环评测：
+
+```bash
+../device-agent-lab/.venv/bin/python \
+  ../device-agent-lab/scripts/evaluate_mock_stack.py
+```
+
+它使用本仓库自己的虚拟环境处理真实 FastAPI 请求，再由 DeviceOps 的
+`HttpKnowledgeGateway` 消费结果。公开基线为 `8/8`；完整用例、逐条 Trace、
+引用来源和证据边界保存在兄弟项目的
+`evals/reports/mock_stack_e2e.json`。
+
 复制 `.env.example` 为 `.env` 后，将 catalog、缓存和向量库指向自己的本地目录。
 当前私有演示配置不提交 Git。
 
