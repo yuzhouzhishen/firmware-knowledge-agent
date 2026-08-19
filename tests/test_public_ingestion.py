@@ -51,6 +51,47 @@ def test_extract_document_markdown_chooses_largest_content_container() -> None:
     assert "actual documentation body" in markdown
 
 
+def test_extract_document_markdown_keeps_tables_without_duplicate_cells() -> None:
+    html = """
+    <html>
+      <body>
+        <main>
+          <h1>Acceptance</h1>
+          <table>
+            <tr><th>Check</th><th>Expected</th></tr>
+            <tr>
+              <td><p>VBUS</p></td>
+              <td><p>Stable output</p></td>
+            </tr>
+          </table>
+        </main>
+      </body>
+    </html>
+    """
+
+    markdown = extract_document_markdown(html)
+
+    assert "| Check | Expected |" in markdown
+    assert "| VBUS | Stable output |" in markdown
+    assert markdown.count("Stable output") == 1
+
+
+def test_extract_document_markdown_does_not_duplicate_list_paragraphs() -> None:
+    html = """
+    <html>
+      <body>
+        <main>
+          <ul><li><p>Inspect the negotiated protocol.</p></li></ul>
+        </main>
+      </body>
+    </html>
+    """
+
+    markdown = extract_document_markdown(html)
+
+    assert markdown == "- Inspect the negotiated protocol."
+
+
 def test_rejects_non_allowlisted_sources() -> None:
     with pytest.raises(ValueError, match="allowlisted"):
         _validate_source_url("https://example.com/private-doc")

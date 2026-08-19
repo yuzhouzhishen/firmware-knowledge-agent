@@ -3,10 +3,12 @@ from __future__ import annotations
 import operator
 import os
 import re
+from time import perf_counter
 from typing import Annotated, Literal, Protocol, TypedDict
 
 import requests
 from langgraph.graph import END, START, StateGraph
+from pydantic import BaseModel, Field
 
 from firmware_knowledge_agent.models import (
     AgenticAnswerResponse,
@@ -25,11 +27,20 @@ class AnswerGenerationError(RuntimeError):
     pass
 
 
+class GroundedClaim(BaseModel):
+    text: str = Field(min_length=1, max_length=500)
+    citations: list[int] = Field(min_length=1, max_length=4)
+
+
+class GroundedAnswer(BaseModel):
+    claims: list[GroundedClaim] = Field(min_length=1, max_length=6)
+
+
 class ExtractiveAnswerGenerator:
     def generate(self, query: str, hits: list[SearchHit]) -> str:
         del query
         return "\n\n".join(
-            f"[{index}] {hit.chunk.content}"
+            f"【{index}】 {hit.chunk.content}"
             for index, hit in enumerate(hits[:2], start=1)
         )
 
@@ -47,9 +58,10 @@ class OllamaAnswerGenerator:
         self._timeout_seconds = timeout_seconds
 
     def generate(self, query: str, hits: list[SearchHit]) -> str:
+        valid_citations = list(range(1, len(hits) + 1))
         evidence = "\n\n".join(
             (
-                f"[{index}] source={hit.chunk.source_id}; "
+                f"【{index}】 source={hit.chunk.source_id}; "
                 f"section={hit.chunk.section}\n{hit.chunk.content}"
             )
             for index, hit in enumerate(hits, start=1)
@@ -60,19 +72,35 @@ class OllamaAnswerGenerator:
                 json={
                     "model": self._model,
                     "stream": False,
+                    "format": GroundedAnswer.model_json_schema(),
+                    "keep_alive": "10m",
+                    "options": {
+                        "temperature": 0,
+                        "num_predict": 500,
+                    },
                     "messages": [
                         {
                             "role": "system",
                             "content": (
-                                "你是固件文档助手。只能依据给定证据回答；"
-                                "不要补充证据中没有的事实。关键结论后使用 "
-                                "[1]、[2] 形式标注证据编号。"
+                                "你是固件故障排查助手。只能依据给定证据，"
+                                "输出 2 到 5 条简洁、可执行的中文结论。"
+                                "如果问题中包含实时结论或实时证据，必须把"
+                                "它们视为已确认事实，不得声称证据未显示的"
+                                "异常；实时事实不是可引用文档，不要为它们"
+                                "编造引用，也不要只复述实时事实。可以把文档"
+                                "内容表述为后续观察项。"
+                                "每条结论都必须在 citations 中列出对应证据"
+                                "编号，不得使用不存在的编号，不要输出 JSON "
+                                "以外的文字。"
                             ),
                         },
                         {
                             "role": "user",
                             "content": (
                                 f"问题：{query}\n\n"
+                                "可用文档证据编号："
+                                f"{valid_citations}。citations 只能使用这些"
+                                "整数。\n\n"
                                 f"证据：\n{evidence}"
                             ),
                         },
@@ -82,14 +110,32 @@ class OllamaAnswerGenerator:
             )
             response.raise_for_status()
             payload = response.json()
-            answer = str(
+            content = str(
                 payload.get("message", {}).get("content", "")
             ).strip()
+            structured = GroundedAnswer.model_validate_json(content)
         except (requests.RequestException, TypeError, ValueError) as exc:
             raise AnswerGenerationError(str(exc)) from exc
-        if not answer:
-            raise AnswerGenerationError("Ollama returned an empty answer")
-        return answer
+        lines: list[str] = []
+        for claim in structured.claims:
+            citation_numbers = sorted(
+                {
+                    number
+                    for number in claim.citations
+                    if 1 <= number <= len(hits)
+                }
+            )
+            if not citation_numbers:
+                continue
+            markers = "".join(
+                f"【{number}】" for number in citation_numbers
+            )
+            lines.append(f"{claim.text.strip()}{markers}")
+        if not lines:
+            raise AnswerGenerationError(
+                "Ollama returned no claims with valid citations"
+            )
+        return "\n".join(lines)
 
 
 class AgenticRagState(TypedDict, total=False):
@@ -101,6 +147,13 @@ class AgenticRagState(TypedDict, total=False):
     answer_valid: bool
     citations: list[Citation]
     status: Literal["answered", "no_evidence"]
+    generation_mode: Literal[
+        "extractive",
+        "ollama",
+        "fallback_extractive",
+        "none",
+    ]
+    degraded: bool
     trace: Annotated[list[str], operator.add]
 
 
@@ -120,6 +173,7 @@ class AgenticRagService:
         *,
         top_k: int = 3,
     ) -> AgenticAnswerResponse:
+        started = perf_counter()
         state = self._graph.invoke(
             {
                 "query": query,
@@ -133,7 +187,22 @@ class AgenticRagService:
             answer=state["answer"],
             citations=state.get("citations", []),
             trace=state.get("trace", []),
+            retriever=self._knowledge.retriever_mode,
+            reranker=self._knowledge.reranker_mode,
+            generation_mode=state.get(
+                "generation_mode",
+                self._configured_generation_mode(),
+            ),
+            degraded=state.get("degraded", False),
+            latency_ms=round((perf_counter() - started) * 1000, 2),
         )
+
+    def _configured_generation_mode(
+        self,
+    ) -> Literal["extractive", "ollama"]:
+        if isinstance(self._generator, OllamaAnswerGenerator):
+            return "ollama"
+        return "extractive"
 
     def _build_graph(self):
         def retrieve(state: AgenticRagState) -> AgenticRagState:
@@ -175,19 +244,23 @@ class AgenticRagService:
                     state["search"].hits,
                 )
                 trace = ["generate"]
+                degraded = False
             except AnswerGenerationError:
                 answer = ""
                 trace = ["generate_error"]
+                degraded = True
             return {
                 "status": "answered",
                 "answer": answer,
+                "generation_mode": self._configured_generation_mode(),
+                "degraded": degraded,
                 "trace": trace,
             }
 
         def verify_answer(state: AgenticRagState) -> AgenticRagState:
             markers = [
                 int(value)
-                for value in re.findall(r"\[(\d+)\]", state["answer"])
+                for value in re.findall(r"【(\d+)】", state["answer"])
             ]
             answer_valid = bool(markers) and all(
                 1 <= marker <= len(state["search"].hits)
@@ -214,6 +287,11 @@ class AgenticRagService:
                     state["query"],
                     state["search"].hits,
                 ),
+                "generation_mode": "fallback_extractive",
+                "degraded": (
+                    state.get("degraded", False)
+                    or self._configured_generation_mode() != "extractive"
+                ),
                 "trace": ["fallback_extractive"],
             }
 
@@ -223,6 +301,8 @@ class AgenticRagService:
                 "status": "no_evidence",
                 "answer": "当前知识库没有找到足够证据，暂不回答。",
                 "citations": [],
+                "generation_mode": "none",
+                "degraded": False,
                 "trace": ["refuse"],
             }
 

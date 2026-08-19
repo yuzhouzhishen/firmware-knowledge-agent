@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "snapshot": {
+    "document_count": 53,
+    "chunk_count": 501,
+    "private_inputs_distributed": false
+  },
+  "run_config": {
+    "retriever": "vector",
+    "reranker": "none",
+    "embedding_provider": "ollama",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "top_k": 3,
+    "chunk_size": 1000,
+    "chunk_overlap": 150,
+    "vector_min_score": 0.55,
+    "strict_label_audit": true
+  },
+  "dataset": {
+    "question_count": 40,
+    "answerable_count": 30,
+    "unanswerable_count": 10
+  },
+  "retrieval": {
+    "hit_at_3": 0.9667,
+    "mrr": 0.8556,
+    "abstention_accuracy": 1.0,
+    "overall_accuracy": 0.975
+  },
+  "extractive_answer_baseline": {
+    "end_to_end_accuracy": 0.925,
+    "source_hit_rate": 1.0,
+    "answer_term_accuracy": 0.9,
+    "citation_validity": 1.0,
+    "abstention_accuracy": 1.0,
+    "degraded_rate": 0.0,
+    "average_latency_ms": 113.82,
+    "p95_latency_ms": 180.96
+  },
+  "ollama_answer_baseline": {
+    "model": "llama3.1:8b",
+    "end_to_end_accuracy": 0.375,
+    "source_hit_rate": 1.0,
+    "answer_term_accuracy": 0.1667,
+    "citation_validity": 1.0,
+    "abstention_accuracy": 1.0,
+    "degraded_rate": 0.0,
+    "average_latency_ms": 10870.13,
+    "p95_latency_ms": 20656.33
+  },
+  "evidence_boundary": [
+    "The corpus, source manifest, evaluation questions, and per-case results are private and are not distributed.",
+    "The aggregate metrics cannot be independently reproduced from this public repository alone.",
+    "Automated source, evidence-term, and citation checks are not equivalent to human factuality review."
+  ]
+}

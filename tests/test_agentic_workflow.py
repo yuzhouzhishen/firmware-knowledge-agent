@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from unittest import mock
 
 from firmware_knowledge_agent.agentic_workflow import (
     AgenticRagService,
     AnswerGenerationError,
+    OllamaAnswerGenerator,
 )
 from firmware_knowledge_agent.models import SearchHit
 from firmware_knowledge_agent.service import FirmwareKnowledgeService
@@ -19,7 +21,7 @@ class RecordingGenerator:
 
     def generate(self, query: str, hits: list[SearchHit]) -> str:
         self.calls.append((query, hits))
-        return "应等待 IP_EVENT_STA_GOT_IP 后再创建 socket。[1]"
+        return "应等待 IP_EVENT_STA_GOT_IP 后再创建 socket。【1】"
 
 
 def build_service(
@@ -92,7 +94,7 @@ def test_agentic_workflow_falls_back_when_citation_is_missing() -> None:
     )
 
     assert response.status == "answered"
-    assert response.answer.startswith("[1]")
+    assert response.answer.startswith("【1】")
     assert response.trace[-2:] == [
         "verify_citations",
         "fallback_extractive",
@@ -110,6 +112,48 @@ def test_agentic_workflow_falls_back_when_generator_fails() -> None:
     )
 
     assert response.status == "answered"
-    assert response.answer.startswith("[1]")
+    assert response.answer.startswith("【1】")
     assert "generate_error" in response.trace
     assert response.trace[-1] == "fallback_extractive"
+
+
+def test_ollama_generator_renders_structured_claim_citations() -> None:
+    knowledge = FirmwareKnowledgeService(
+        PROJECT_ROOT / "data/sample/sources.json"
+    )
+    hits = knowledge.search(
+        "Wi-Fi 连接 AP 后应等待哪个事件再创建 socket？",
+        top_k=2,
+    ).hits
+    response = mock.Mock()
+    response.raise_for_status.return_value = None
+    response.json.return_value = {
+        "message": {
+            "content": (
+                '{"claims":['
+                '{"text":"先等待设备取得 IP。","citations":[1]},'
+                '{"text":"再创建网络 socket。","citations":[1,2]}'
+                "]}"
+            )
+        }
+    }
+
+    with mock.patch(
+        "firmware_knowledge_agent.agentic_workflow.requests.post",
+        return_value=response,
+    ) as post:
+        answer = OllamaAnswerGenerator().generate("如何建连？", hits)
+
+    assert answer == (
+        "先等待设备取得 IP。【1】\n"
+        "再创建网络 socket。【1】【2】"
+    )
+    request_payload = post.call_args.kwargs["json"]
+    assert request_payload["format"]["properties"]["claims"]
+    assert request_payload["options"]["temperature"] == 0
+    assert "实时事实不是可引用文档" in (
+        request_payload["messages"][0]["content"]
+    )
+    assert "可用文档证据编号：[1, 2]" in (
+        request_payload["messages"][1]["content"]
+    )

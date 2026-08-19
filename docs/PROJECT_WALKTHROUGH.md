@@ -43,7 +43,7 @@ flowchart LR
 当前本机演示入口：
 
 ```text
-http://127.0.0.1:8011/docs
+http://127.0.0.1:8011/
 ```
 
 优先操作四个接口：
@@ -206,7 +206,7 @@ grade_evidence -> refuse -> END
 
 - `src/firmware_knowledge_agent/evaluation.py`
 - `evals/README.md`
-- `var/private-corpus/holdout-v1.json`
+- `var/private-corpus/holdout-v2.json`
 - `tests/test_evaluation.py`
 - `tests/test_evaluation_evidence.py`
 
@@ -217,18 +217,21 @@ grade_evidence -> refuse -> END
 - `abstention_accuracy`：无答案问题是否正确拒答。
 - `overall_accuracy`：可回答命中和无答案拒答共同统计。
 
-当前简历使用的是参数冻结后的 20 题私有留出集：
+当前简历使用参数冻结后的 40 题私有留出集：
 
-- 15 条可回答题，`Hit@3=0.9333`、`MRR=0.7444`。
-- 5 条域外题，拒答准确率 `1.0000`。
-- 唯一失败题的正确证据排第 6，失败保留，不再针对该留出集调参。
+- 30 条可回答题，`Hit@3=0.9667`、`MRR=0.8556`。
+- 10 条域外题，拒答准确率 `1.0000`。
+- 总体检索/拒答准确率 `0.9750`。
+- 抽取式端到端答案基线通过率 `0.9250`，来源命中率和引用合法率均为
+  `1.0000`。
+- 失败样例和原始报告保留，不再针对这份留出集调参。
 
 注意：
 
 - 36 题同源回归集用于开发回归，不等于未知问题泛化能力。
 - 不能把总体准确率 `0.95` 简写成“RAG 准确率 95%”。
-- 当前自动评测重点是检索证据和拒答，不要声称已经完成完整的生成答案
-  事实一致性评测。
+- `answer_evaluation.py` 进一步检查答案关键词、来源命中、引用合法性、拒答、
+  降级率和延迟；它仍不等价于人工事实一致性审核。
 
 练习：新增题目时先冻结预期来源和证据词，再运行检索；不能看到结果后
 修改标签来迁就当前输出。
@@ -248,6 +251,25 @@ grade_evidence -> refuse -> END
 - API、CLI 和评测程序为什么复用同一套 Service 与 Retriever。
 - 为什么私有原文和向量索引都不提交到代码仓库。
 - 服务启动时如何加载语料，关闭时如何释放 Qdrant 资源。
+- 为什么嵌入式 Qdrant 当前只能单进程持有目录锁。
+
+## 第九阶段：理解双项目联动和部署
+
+阅读：
+
+- `../device-agent-lab/src/device_agent_lab/knowledge_gateway.py`
+- `../device-agent-lab/deploy/compose.yaml`
+- `../device-agent-lab/docs/MACOS_ORBSTACK_DEPLOYMENT.md`
+- 本项目 `Dockerfile`
+
+重点：
+
+- RAG 是独立 FastAPI 服务，DeviceOps 通过 HTTP 调用，不把两个代码库揉成一个。
+- 私有语料以本机 volume 挂载，不写入镜像。
+- 两个容器通过 `host.docker.internal` 复用宿主机 Ollama。
+- RAG 失败时 DeviceOps 仍保留真实设备证据并显式降级。
+- 两个项目可以分别写进简历，但演示时组成
+  `DeviceOps -> RAG -> Ollama -> XDP MCP -> 真实设备`。
 
 ## 最终验收
 
@@ -259,6 +281,6 @@ grade_evidence -> refuse -> END
 4. 解释 LangGraph 每个节点以及两条条件分支。
 5. 解释 Hit@3、MRR、拒答准确率和留出集。
 6. 独立增加一种元数据字段或一个小型校验，并补测试。
-7. 能从一个失败问题定位到解析、切分、Embedding、召回、重排或证据
-   门槛中的具体环节。
-
+7. 能从一个失败问题定位到解析、切分、Embedding、召回、重排、生成、
+   引用或证据门槛中的具体环节。
+8. 解释为什么两个项目独立，又如何通过 HTTP 和 Docker Compose 串联。

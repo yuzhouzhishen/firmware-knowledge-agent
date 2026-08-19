@@ -29,6 +29,28 @@ def test_health_reports_loaded_corpus() -> None:
     assert response.json()["retriever"] == "bm25"
     assert response.json()["reranker"] == "none"
     assert response.json()["vector_store"] == "disabled"
+    assert response.json()["generator"] == "extractive"
+
+
+def test_console_and_corpus_metadata_are_available() -> None:
+    with build_client() as client:
+        console = client.get("/")
+        favicon = client.get("/favicon.ico")
+        corpus = client.get("/v1/corpus/sources")
+        evaluations = client.get("/v1/evaluations")
+
+    assert console.status_code == 200
+    assert favicon.status_code == 204
+    assert "Firmware Knowledge" in console.text
+    assert corpus.status_code == 200
+    assert corpus.json()["sources"] == 3
+    assert len(corpus.json()["items"]) == 3
+    assert corpus.json()["components"]
+    assert evaluations.status_code == 200
+    assert any(
+        report["kind"] == "retrieval"
+        for report in evaluations.json()
+    )
 
 
 def test_search_endpoint_returns_ranked_evidence() -> None:
@@ -69,6 +91,9 @@ def test_agentic_answer_endpoint_returns_trace_and_citations() -> None:
         "verify_citations",
         "complete",
     ]
+    assert payload["generation_mode"] == "extractive"
+    assert payload["degraded"] is False
+    assert payload["latency_ms"] >= 0
 
 
 def test_upload_endpoint_ingests_document_and_reloads_service(

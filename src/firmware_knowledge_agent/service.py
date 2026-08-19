@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Literal
+from typing import Literal, cast
 
 from firmware_knowledge_agent.corpus import load_corpus
 from firmware_knowledge_agent.embeddings import (
@@ -14,6 +14,7 @@ from firmware_knowledge_agent.embeddings import (
 from firmware_knowledge_agent.models import (
     AnswerResponse,
     Citation,
+    KnowledgeChunk,
     SearchResponse,
 )
 from firmware_knowledge_agent.retrieval import (
@@ -112,6 +113,26 @@ class FirmwareKnowledgeService:
         if callable(close):
             close()
 
+    def source_summaries(self) -> list[dict[str, str]]:
+        by_source: dict[str, KnowledgeChunk] = {}
+        for chunk in self.chunks:
+            by_source.setdefault(chunk.source_id, chunk)
+        return [
+            {
+                "source_id": chunk.source_id,
+                "title": chunk.title,
+                "source_url": chunk.source_url,
+                "version": chunk.version,
+                "source_type": chunk.source_type,
+                "component": chunk.component,
+                "confidentiality": chunk.confidentiality,
+            }
+            for chunk in sorted(
+                by_source.values(),
+                key=lambda item: (item.component, item.title),
+            )
+        ]
+
     def search(self, query: str, *, top_k: int = 3) -> SearchResponse:
         normalized_query = query.strip()
         if not normalized_query:
@@ -189,7 +210,13 @@ class FirmwareKnowledgeService:
                         model=model_name,
                     )
                 elif provider == "ollama":
-                    embeddings = OllamaEmbeddingModel(model=model_name)
+                    embeddings = OllamaEmbeddingModel(
+                        model=model_name,
+                        base_url=os.getenv(
+                            "FIRMWARE_RAG_OLLAMA_URL",
+                            "http://127.0.0.1:11434",
+                        ),
+                    )
                 else:
                     raise ValueError(
                         "FIRMWARE_RAG_EMBEDDING_PROVIDER must be "
@@ -238,3 +265,66 @@ class FirmwareKnowledgeService:
             self._configured_reranker,
             candidate_count=self._reranker_candidate_count,
         )
+
+
+def build_knowledge_service_from_env(
+    catalog_path: Path,
+) -> FirmwareKnowledgeService:
+    retriever = os.getenv("FIRMWARE_RAG_RETRIEVER", "bm25").lower()
+    if retriever not in {"bm25", "vector", "hybrid"}:
+        raise ValueError(
+            "FIRMWARE_RAG_RETRIEVER must be bm25, vector, or hybrid"
+        )
+    reranker = os.getenv("FIRMWARE_RAG_RERANKER", "none").lower()
+    if reranker not in {"none", "cross-encoder"}:
+        raise ValueError(
+            "FIRMWARE_RAG_RERANKER must be none or cross-encoder"
+        )
+    return FirmwareKnowledgeService(
+        catalog_path,
+        retriever_mode=cast(
+            Literal["bm25", "vector", "hybrid"],
+            retriever,
+        ),
+        embedding_cache_path=Path(
+            os.getenv(
+                "FIRMWARE_RAG_EMBEDDING_CACHE",
+                "var/embeddings.json",
+            )
+        ),
+        vector_store_path=Path(
+            os.getenv(
+                "FIRMWARE_RAG_VECTOR_STORE",
+                "var/vector-store",
+            )
+        ),
+        vector_collection=os.getenv(
+            "FIRMWARE_RAG_VECTOR_COLLECTION",
+            "firmware_knowledge",
+        ),
+        reranker_mode=cast(
+            Literal["none", "cross-encoder"],
+            reranker,
+        ),
+        reranker_model=os.getenv(
+            "FIRMWARE_RAG_RERANKER_MODEL",
+            "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+        ),
+        reranker_model_file=os.getenv(
+            "FIRMWARE_RAG_RERANKER_ONNX_FILE",
+            "onnx/model_quint8_avx2.onnx",
+        ),
+        reranker_cache_dir=Path(
+            os.getenv("FIRMWARE_RAG_RERANKER_CACHE", "var/models")
+        ),
+        reranker_candidate_count=int(
+            os.getenv("FIRMWARE_RAG_RERANKER_CANDIDATES", "12")
+        ),
+        chunk_size=int(os.getenv("FIRMWARE_RAG_CHUNK_SIZE", "700")),
+        chunk_overlap=int(
+            os.getenv("FIRMWARE_RAG_CHUNK_OVERLAP", "100")
+        ),
+        vector_min_score=float(
+            os.getenv("FIRMWARE_RAG_VECTOR_MIN_SCORE", "0.55")
+        ),
+    )

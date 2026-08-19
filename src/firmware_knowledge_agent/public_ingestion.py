@@ -113,15 +113,26 @@ def extract_document_markdown(html: str) -> str:
 
     lines: list[str] = []
     for element in root.find_all(
-        ["h1", "h2", "h3", "p", "pre", "li"],
+        ["h1", "h2", "h3", "h4", "p", "pre", "li", "tr"],
         recursive=True,
     ):
         if not isinstance(element, Tag):
             continue
+        if _is_nested_block(element, root):
+            continue
+        if element.name == "tr":
+            cells = [
+                _normalize_text(cell.get_text(" ", strip=True))
+                for cell in element.find_all(["th", "td"], recursive=False)
+            ]
+            cells = [cell for cell in cells if cell]
+            if cells:
+                lines.append("| " + " | ".join(cells) + " |")
+            continue
         text = _normalize_text(element.get_text(" ", strip=True))
         if not text:
             continue
-        if element.name in {"h1", "h2", "h3"}:
+        if element.name in {"h1", "h2", "h3", "h4"}:
             lines.append(f"{'#' * int(element.name[1])} {text}")
         elif element.name == "pre":
             lines.append(f"```\n{text}\n```")
@@ -130,6 +141,16 @@ def extract_document_markdown(html: str) -> str:
         else:
             lines.append(text)
     return "\n\n".join(_deduplicate_adjacent(lines)).strip()
+
+
+def _is_nested_block(element: Tag, root: Tag) -> bool:
+    """Avoid indexing table/list content both as a parent and as children."""
+    parent = element.parent
+    while isinstance(parent, Tag) and parent is not root:
+        if parent.name in {"pre", "li", "tr"}:
+            return True
+        parent = parent.parent
+    return False
 
 
 def convert_rst_headings(content: str) -> str:

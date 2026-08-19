@@ -90,24 +90,57 @@
 
 不再针对这两条调整当前模型，否则留出集会被污染成新的开发集。
 
-## 私有业务语料留出集
+## 私有业务语料冻结留出集
 
-私有语料的检索器、切分参数和 `0.55` 门槛冻结后，新增 20 条自然问法：
+私有语料扩充到 53 篇、501 个 Chunk 后，检索器、切分参数和 `0.55` 门槛
+冻结，再建立 `holdout-v2.json`：
 
-- 15 条可回答题，覆盖连接、任务、功率、协议、升级和配置同步。
-- 5 条业务相邻但语料未覆盖的困难拒答题。
+- 30 条可回答题，覆盖连接、MQTT、调度、功率、端口协议、固件升级、
+  充电兼容性、效率、温度策略和 PD 调试。
+- 10 条业务相邻但语料未覆盖的困难拒答题。
 - 每道可回答题都通过同 Chunk 严格证据标签审计。
 
-首次运行原样保存在 Git 忽略目录中的
-`var/private-corpus/holdout-v1-vector-raw.json`：
+逐题报告保存在 Git 忽略目录中的
+`var/private-corpus/holdout-v2-vector.json`。公开仓库只分发不含内部来源和题目
+正文的 [`聚合报告`](reports/private_corpus_summary.json)：
 
 | Hit@3 | MRR | 拒答准确率 | 总体准确率 |
 | ---: | ---: | ---: | ---: |
-| 0.9333 | 0.7444 | 1.0000 | 0.9500 |
+| 0.9667 | 0.8556 | 1.0000 | 0.9750 |
 
-15 条可回答题中，9 条正确证据排第 1、3 条排第 2、2 条排第 3。唯一失败
-题被相邻主题的多个 Chunk 干扰，正确证据排第 6。该失败不再用于调整
-Embedding、阈值、切分参数或查询规则。
+该报告是参数冻结后的留出结果。失败样例原样保留，不再用于修改 Embedding、
+阈值、切分参数或查询规范化规则。
+
+## 端到端答案评测
+
+`answer_evaluation.py` 在同一 40 题留出集上检查：
+
+- 回答状态是否与可答/不可答标签一致。
+- 引用来源是否命中人工标注来源。
+- 回答是否包含预先标注的关键证据词组。
+- `【n】` 引用编号是否存在且没有越界。
+- 生成是否降级，以及平均/P95 延迟。
+
+抽取式稳定基线：
+
+| 端到端通过率 | 来源命中率 | 答案证据词 | 引用合法率 | 拒答准确率 |
+| ---: | ---: | ---: | ---: | ---: |
+| 0.9250 | 1.0000 | 0.9000 | 1.0000 | 1.0000 |
+
+报告同时记录每条结果的 `generation_mode`，避免把抽取式稳定基线与 Ollama
+生成结果混在一起。自动证据词检查不等于人工事实审核；面试时不能将其描述为
+“答案事实准确率”。
+
+同一留出集上的 `llama3.1:8b` 生成结果：
+
+| 来源命中率 | 引用合法率 | 拒答准确率 | 严格证据词覆盖率 | 严格端到端通过率 |
+| ---: | ---: | ---: | ---: | ---: |
+| 1.0000 | 1.0000 | 1.0000 | 0.1667 | 0.3750 |
+
+平均延迟为 10.87 s，P95 为 20.66 s。该失败不是检索或引用越界，而是本地
+8B 模型经常概括、翻译或省略人工标注术语，因而未通过严格词组检查。留出集
+运行后不再据此修改 Prompt；如继续优化，应建立新的生成开发集，并保留这份报告
+作为独立测试基线。
 
 ## 运行
 
@@ -142,14 +175,25 @@ FIRMWARE_RAG_EMBEDDING_PROVIDER=ollama \
 FIRMWARE_RAG_EMBEDDING_MODEL=qwen3-embedding:0.6b \
 uv run firmware-rag-eval \
   --catalog var/private-corpus/sources.json \
-  --questions var/private-corpus/holdout-v1.json \
+  --questions var/private-corpus/holdout-v2.json \
   --retriever vector \
-  --embedding-cache var/private-embeddings.json \
+  --embedding-cache var/private-corpus/embeddings-v2.json \
   --chunk-size 1000 \
   --chunk-overlap 150 \
   --vector-min-score 0.55 \
-  --vector-store var/vector-store/private-wiki \
-  --vector-collection private_firmware_knowledge \
+  --vector-store var/private-corpus/vector-store-v2 \
+  --vector-collection firmware_private_v2 \
   --strict-label-audit \
-  --output var/private-corpus/holdout-v1-vector-raw.json
+  --output var/private-corpus/holdout-v2-vector.json
+```
+
+端到端 Ollama 回答评测：
+
+```bash
+FIRMWARE_RAG_GENERATOR=ollama \
+  uv run firmware-rag-answer-eval \
+  --catalog var/private-corpus/sources.json \
+  --questions var/private-corpus/holdout-v2.json \
+  --top-k 4 \
+  --output var/private-corpus/answer-eval-ollama.json
 ```

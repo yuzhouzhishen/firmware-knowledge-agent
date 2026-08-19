@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import json
 import os
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Annotated, AsyncIterator
+from typing import Annotated, Any, AsyncIterator
 
 from dotenv import load_dotenv
 from fastapi import (
@@ -14,6 +15,8 @@ from fastapi import (
     Request,
     UploadFile,
 )
+from fastapi.responses import FileResponse, Response
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from firmware_knowledge_agent.agentic_workflow import (
@@ -31,6 +34,9 @@ from firmware_knowledge_agent.models import (
     SearchResponse,
 )
 from firmware_knowledge_agent.service import FirmwareKnowledgeService
+from firmware_knowledge_agent.service import (
+    build_knowledge_service_from_env,
+)
 
 
 class QueryRequest(BaseModel):
@@ -47,10 +53,36 @@ class CorpusUploadResponse(BaseModel):
     index_rebuilt: bool
 
 
+class SourceSummary(BaseModel):
+    source_id: str
+    title: str
+    source_url: str
+    version: str
+    source_type: str
+    component: str
+    confidentiality: str
+
+
+class CorpusSummary(BaseModel):
+    sources: int
+    chunks: int
+    components: dict[str, int]
+    items: list[SourceSummary]
+
+
+class EvaluationSummary(BaseModel):
+    name: str
+    kind: str
+    question_count: int
+    metrics: dict[str, float | None]
+
+
 def create_app(
     service: FirmwareKnowledgeService | None = None,
     agentic_service: AgenticRagService | None = None,
 ) -> FastAPI:
+    web_directory = Path(__file__).with_name("web")
+
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         owns_service = service is None
@@ -59,69 +91,8 @@ def create_app(
             catalog = Path(
                 os.getenv("FIRMWARE_RAG_CATALOG", str(DEFAULT_CATALOG))
             )
-            retriever_mode = os.getenv(
-                "FIRMWARE_RAG_RETRIEVER",
-                "bm25",
-            )
-            if retriever_mode not in {"bm25", "vector", "hybrid"}:
-                raise ValueError(
-                    "FIRMWARE_RAG_RETRIEVER must be bm25, vector, or hybrid"
-                )
-            app.state.service = FirmwareKnowledgeService(
-                catalog,
-                retriever_mode=retriever_mode,
-                embedding_cache_path=Path(
-                    os.getenv(
-                        "FIRMWARE_RAG_EMBEDDING_CACHE",
-                        "var/embeddings.json",
-                        )
-                    ),
-                vector_store_path=Path(
-                    os.getenv(
-                        "FIRMWARE_RAG_VECTOR_STORE",
-                        "var/vector-store",
-                    )
-                ),
-                vector_collection=os.getenv(
-                    "FIRMWARE_RAG_VECTOR_COLLECTION",
-                    "firmware_knowledge",
-                ),
-                reranker_mode=os.getenv(
-                    "FIRMWARE_RAG_RERANKER",
-                    "none",
-                ),
-                reranker_model=os.getenv(
-                    "FIRMWARE_RAG_RERANKER_MODEL",
-                    (
-                        "cross-encoder/"
-                        "mmarco-mMiniLMv2-L12-H384-v1"
-                    ),
-                ),
-                reranker_model_file=os.getenv(
-                    "FIRMWARE_RAG_RERANKER_ONNX_FILE",
-                    "onnx/model_quint8_avx2.onnx",
-                ),
-                reranker_cache_dir=Path(
-                    os.getenv(
-                        "FIRMWARE_RAG_RERANKER_CACHE",
-                        "var/models",
-                    )
-                ),
-                reranker_candidate_count=int(
-                    os.getenv(
-                        "FIRMWARE_RAG_RERANKER_CANDIDATES",
-                        "12",
-                    )
-                ),
-                chunk_size=int(
-                    os.getenv("FIRMWARE_RAG_CHUNK_SIZE", "700")
-                ),
-                chunk_overlap=int(
-                    os.getenv("FIRMWARE_RAG_CHUNK_OVERLAP", "100")
-                ),
-                vector_min_score=float(
-                    os.getenv("FIRMWARE_RAG_VECTOR_MIN_SCORE", "0.55")
-                ),
+            app.state.service = build_knowledge_service_from_env(
+                catalog
             )
         else:
             app.state.service = service
@@ -140,8 +111,13 @@ def create_app(
 
     app = FastAPI(
         title="Firmware Knowledge Agent API",
-        version="0.3.0",
+        version="1.0.0",
         lifespan=lifespan,
+    )
+    app.mount(
+        "/static",
+        StaticFiles(directory=web_directory),
+        name="static",
     )
     if service is not None:
         app.state.service = service
@@ -152,6 +128,14 @@ def create_app(
                 build_answer_generator_from_env(),
             )
         )
+
+    @app.get("/", include_in_schema=False)
+    async def console() -> FileResponse:
+        return FileResponse(web_directory / "index.html")
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    async def favicon() -> Response:
+        return Response(status_code=204)
 
     @app.get("/health")
     async def health(
@@ -167,7 +151,40 @@ def create_app(
             "vector_store": current.vector_store_backend,
             "vector_min_score": current.vector_min_score,
             "agentic_workflow": "ready",
+            "generator": os.getenv(
+                "FIRMWARE_RAG_GENERATOR",
+                "extractive",
+            ),
         }
+
+    @app.get(
+        "/v1/corpus/sources",
+        response_model=CorpusSummary,
+    )
+    async def corpus_sources(request: Request) -> CorpusSummary:
+        current = _service(request)
+        items = [
+            SourceSummary.model_validate(item)
+            for item in current.source_summaries()
+        ]
+        components: dict[str, int] = {}
+        for item in items:
+            components[item.component] = (
+                components.get(item.component, 0) + 1
+            )
+        return CorpusSummary(
+            sources=current.source_count,
+            chunks=len(current.chunks),
+            components=dict(sorted(components.items())),
+            items=items,
+        )
+
+    @app.get(
+        "/v1/evaluations",
+        response_model=list[EvaluationSummary],
+    )
+    async def evaluation_summaries() -> list[EvaluationSummary]:
+        return _load_evaluation_summaries()
 
     @app.post("/v1/search", response_model=SearchResponse)
     async def search(
@@ -270,6 +287,73 @@ def _agentic_service(request: Request) -> AgenticRagService:
             status_code=503,
             detail="agentic service is not initialized",
         ) from exc
+
+
+def _load_evaluation_summaries() -> list[EvaluationSummary]:
+    project_root = Path(__file__).resolve().parents[2]
+    configured = os.getenv("FIRMWARE_RAG_EVAL_REPORTS", "")
+    paths = (
+        [Path(value.strip()) for value in configured.split(",") if value.strip()]
+        if configured
+        else [
+            project_root / "evals/reports/retrieval_v1_bm25.json",
+            project_root / "evals/reports/retrieval_v1_vector.json",
+            project_root
+            / "evals/reports/retrieval_v1_vector_query_expansion.json",
+            project_root / "evals/reports/holdout_v1_vector.json",
+            project_root / "var/private-corpus/holdout-v2-vector.json",
+            project_root
+            / "var/private-corpus/answer-eval-extractive.json",
+            project_root / "var/private-corpus/answer-eval-ollama.json",
+        ]
+    )
+    summaries: list[EvaluationSummary] = []
+    for path in paths:
+        if not path.is_absolute():
+            path = project_root / path
+        if not path.exists():
+            continue
+        try:
+            payload: dict[str, Any] = json.loads(
+                path.read_text(encoding="utf-8")
+            )
+        except (OSError, TypeError, ValueError):
+            continue
+        if "end_to_end_accuracy" in payload:
+            metrics = {
+                key: payload.get(key)
+                for key in (
+                    "end_to_end_accuracy",
+                    "source_hit_rate",
+                    "answer_term_accuracy",
+                    "citation_validity",
+                    "abstention_accuracy",
+                    "degraded_rate",
+                    "average_latency_ms",
+                    "p95_latency_ms",
+                )
+            }
+            kind = "answer"
+        else:
+            metrics = {
+                key: payload.get(key)
+                for key in (
+                    "hit_at_k",
+                    "mrr",
+                    "abstention_accuracy",
+                    "overall_accuracy",
+                )
+            }
+            kind = "retrieval"
+        summaries.append(
+            EvaluationSummary(
+                name=path.stem,
+                kind=kind,
+                question_count=int(payload.get("question_count", 0)),
+                metrics=metrics,
+            )
+        )
+    return summaries
 
 
 app = create_app()

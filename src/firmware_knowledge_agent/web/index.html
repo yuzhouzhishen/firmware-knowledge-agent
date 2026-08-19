@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Firmware Knowledge</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">FK</span>
+        <div>
+          <strong>Firmware Knowledge</strong>
+          <span>技术知识工作台</span>
+        </div>
+      </div>
+      <div class="runtime-strip" aria-label="运行状态">
+        <span id="health-dot" class="status-dot"></span>
+        <span id="health-label">连接中</span>
+        <span class="runtime-divider"></span>
+        <span id="runtime-label">--</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="rail">
+        <nav class="view-tabs" aria-label="工作台视图">
+          <button class="view-tab active" data-view="chat">问答</button>
+          <button class="view-tab" data-view="corpus">语料</button>
+          <button class="view-tab" data-view="evaluation">评测</button>
+        </nav>
+
+        <section class="rail-metrics" aria-label="知识库统计">
+          <div>
+            <span>文档</span>
+            <strong id="source-count">--</strong>
+          </div>
+          <div>
+            <span>Chunk</span>
+            <strong id="chunk-count">--</strong>
+          </div>
+          <div>
+            <span>检索</span>
+            <strong id="retriever-mode">--</strong>
+          </div>
+        </section>
+
+        <section class="rail-section">
+          <div class="section-heading">
+            <h2>业务域</h2>
+            <span id="component-count">0</span>
+          </div>
+          <div id="component-list" class="component-list"></div>
+        </section>
+      </aside>
+
+      <section id="chat-view" class="view active">
+        <div class="chat-main">
+          <div class="view-header">
+            <div>
+              <span class="eyebrow">RAG SESSION</span>
+              <h1>固件知识问答</h1>
+            </div>
+            <button id="clear-chat" class="icon-button" title="清空会话" aria-label="清空会话">
+              ↻
+            </button>
+          </div>
+
+          <div id="conversation" class="conversation" aria-live="polite">
+            <article class="message assistant">
+              <div class="message-meta">
+                <strong>Knowledge Agent</strong>
+                <span>就绪</span>
+              </div>
+              <div class="message-body">
+                固件语料索引已就绪。
+              </div>
+            </article>
+          </div>
+
+          <div class="suggestions" aria-label="示例问题">
+            <button data-question="充电功率偏低时应该按什么流程排查？">充电功率排查</button>
+            <button data-question="设备温度过高时功率分配会怎样处理？">温度降功率</button>
+            <button data-question="PD 协商异常时怎样抓取和分析证据？">PD 协商异常</button>
+          </div>
+
+          <form id="question-form" class="composer">
+            <textarea
+              id="question-input"
+              rows="1"
+              placeholder="输入固件、充电协议或设备排查问题"
+              aria-label="问题"
+              required
+            ></textarea>
+            <button id="send-button" type="submit" class="send-button" aria-label="发送" title="发送">
+              ↑
+            </button>
+          </form>
+        </div>
+
+        <aside class="evidence-pane">
+          <div class="pane-heading">
+            <div>
+              <span class="eyebrow">EVIDENCE</span>
+              <h2>证据与链路</h2>
+            </div>
+            <span id="evidence-status" class="badge neutral">等待问题</span>
+          </div>
+          <div id="trace-list" class="trace-list empty">
+            等待检索
+          </div>
+          <div id="citation-list" class="citation-list"></div>
+        </aside>
+      </section>
+
+      <section id="corpus-view" class="view">
+        <div class="full-view">
+          <div class="view-header">
+            <div>
+              <span class="eyebrow">CORPUS</span>
+              <h1>语料目录</h1>
+            </div>
+            <button id="open-upload" class="command-button">上传文档</button>
+          </div>
+          <div class="filter-row">
+            <input id="source-filter" type="search" placeholder="筛选标题、业务域或来源 ID" />
+            <span id="source-visible-count">0 项</span>
+          </div>
+          <div id="source-table" class="source-table"></div>
+        </div>
+      </section>
+
+      <section id="evaluation-view" class="view">
+        <div class="full-view">
+          <div class="view-header">
+            <div>
+              <span class="eyebrow">EVALUATION</span>
+              <h1>离线评测</h1>
+            </div>
+          </div>
+          <div id="evaluation-grid" class="evaluation-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="upload-dialog">
+      <form id="upload-form" method="dialog">
+        <div class="dialog-heading">
+          <div>
+            <span class="eyebrow">INGESTION</span>
+            <h2>上传私有文档</h2>
+          </div>
+          <button id="close-upload" type="button" class="icon-button" aria-label="关闭">×</button>
+        </div>
+        <label>
+          文件
+          <input id="upload-file" name="file" type="file" accept=".md,.markdown,.txt,.html,.htm,.pdf,.docx" required />
+        </label>
+        <label>
+          来源 ID
+          <input id="upload-source-id" name="source_id" placeholder="例如 power-debug-guide" />
+        </label>
+        <label>
+          业务域
+          <input id="upload-component" name="component" value="general" required />
+        </label>
+        <div id="upload-status" class="form-status"></div>
+        <div class="dialog-actions">
+          <button type="button" id="cancel-upload" class="secondary-button">取消</button>
+          <button type="submit" class="command-button">导入并重建索引</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

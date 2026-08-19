@@ -67,6 +67,16 @@ class AgenticAnswerResponse(BaseModel):
     answer: str
     citations: list[Citation] = Field(default_factory=list)
     trace: list[str] = Field(default_factory=list)
+    retriever: Literal["bm25", "vector", "hybrid"] = "bm25"
+    reranker: str = "none"
+    generation_mode: Literal[
+        "extractive",
+        "ollama",
+        "fallback_extractive",
+        "none",
+    ] = "extractive"
+    degraded: bool = False
+    latency_ms: float = 0.0
 
 
 class EvaluationQuestion(BaseModel):
@@ -128,3 +138,34 @@ class EvaluationReport(BaseModel):
     overall_accuracy: float
     results: list[EvaluationResult]
     run_config: EvaluationRunConfig | None = None
+
+
+class AnswerEvaluationResult(BaseModel):
+    question_id: str
+    expected_answerable: bool
+    answer: str
+    passed: bool
+    status: Literal["answered", "no_evidence"]
+    source_hit: bool
+    answer_terms_matched: bool
+    citations_valid: bool
+    degraded: bool
+    generation_mode: str
+    latency_ms: float
+    cited_source_ids: list[str] = Field(default_factory=list)
+
+
+class AnswerEvaluationReport(BaseModel):
+    question_count: int
+    answerable_count: int
+    unanswerable_count: int
+    end_to_end_accuracy: float
+    source_hit_rate: float
+    answer_term_accuracy: float
+    citation_validity: float
+    abstention_accuracy: float | None
+    degraded_rate: float
+    generation_modes: dict[str, int]
+    average_latency_ms: float
+    p95_latency_ms: float
+    results: list[AnswerEvaluationResult]
