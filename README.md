@@ -4,7 +4,7 @@
 切分、Embedding、Qdrant 检索、可选混合检索和重排，并通过 LangGraph 实现证据
 门控、生成、引用校验、拒答与抽取式降级。
 
-当前冻结版本：`1.0.0`。
+当前冻结版本：`1.0.1`。
 
 ## 当前能力
 
@@ -20,7 +20,14 @@
 | 接口 | FastAPI、Swagger、Web 知识工作台、CLI |
 | 评测 | 检索、拒答、答案关键词、来源命中、引用合法性、降级率和延迟 |
 | 部署 | Docker；已通过 DeviceOps Compose 在 macOS OrbStack 验证 |
-| 测试 | `49 passed` |
+| 测试 | `50 passed` |
+
+## 演示截图
+
+![Firmware Knowledge Agent 回答、Trace 与引用](docs/screenshots/firmware-rag-answer.jpg)
+
+截图使用仓库内 3 篇公开样例语料和抽取式生成；示例问题会根据当前语料切换，
+不会在公开 Mock 环境展示只能由私有业务语料回答的固定问题。
 
 ## 数据链路
 

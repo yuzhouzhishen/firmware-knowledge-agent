@@ -277,16 +277,29 @@ class AgenticRagService:
             return "complete" if state["answer_valid"] else "fallback"
 
         def complete(state: AgenticRagState) -> AgenticRagState:
-            del state
-            return {"trace": ["complete"]}
+            answer, citations = _normalize_answer_citations(
+                state["answer"],
+                state["citations"],
+            )
+            return {
+                "answer": answer,
+                "citations": citations,
+                "trace": ["complete"],
+            }
 
         def fallback(state: AgenticRagState) -> AgenticRagState:
+            answer = ExtractiveAnswerGenerator().generate(
+                state["query"],
+                state["search"].hits,
+            )
+            answer, citations = _normalize_answer_citations(
+                answer,
+                state["citations"],
+            )
             return {
                 "status": "answered",
-                "answer": ExtractiveAnswerGenerator().generate(
-                    state["query"],
-                    state["search"].hits,
-                ),
+                "answer": answer,
+                "citations": citations,
                 "generation_mode": "fallback_extractive",
                 "degraded": (
                     state.get("degraded", False)
@@ -326,6 +339,30 @@ class AgenticRagService:
         builder.add_edge("fallback", END)
         builder.add_edge("refuse", END)
         return builder.compile()
+
+
+def _normalize_answer_citations(
+    answer: str,
+    citations: list[Citation],
+) -> tuple[str, list[Citation]]:
+    """Keep only cited evidence and renumber markers to the returned list."""
+    marker_order: list[int] = []
+    for value in re.findall(r"【(\d+)】", answer):
+        marker = int(value)
+        if marker not in marker_order:
+            marker_order.append(marker)
+
+    marker_map = {
+        marker: index
+        for index, marker in enumerate(marker_order, start=1)
+    }
+    normalized = re.sub(
+        r"【(\d+)】",
+        lambda match: f"【{marker_map[int(match.group(1))]}】",
+        answer,
+    )
+    selected = [citations[marker - 1] for marker in marker_order]
+    return normalized, selected
 
 
 def build_answer_generator_from_env() -> AnswerGenerator:

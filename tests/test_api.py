@@ -42,6 +42,8 @@ def test_console_and_corpus_metadata_are_available() -> None:
     assert console.status_code == 200
     assert favicon.status_code == 204
     assert "Firmware Knowledge" in console.text
+    assert "v=1.0.1" in console.text
+    assert "PUBLIC_SAMPLE_QUESTIONS" in client.get("/static/app.js").text
     assert corpus.status_code == 200
     assert corpus.json()["sources"] == 3
     assert len(corpus.json()["items"]) == 3

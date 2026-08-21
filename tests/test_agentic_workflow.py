@@ -80,6 +80,13 @@ class FailingGenerator:
         raise AnswerGenerationError("model is unavailable")
 
 
+class ThirdCitationGenerator:
+    def generate(self, query: str, hits: list[SearchHit]) -> str:
+        del query
+        assert len(hits) >= 3
+        return "只使用第三条检索证据。【3】"
+
+
 def test_agentic_workflow_falls_back_when_citation_is_missing() -> None:
     knowledge = FirmwareKnowledgeService(
         PROJECT_ROOT / "data/sample/sources.json"
@@ -115,6 +122,25 @@ def test_agentic_workflow_falls_back_when_generator_fails() -> None:
     assert response.answer.startswith("【1】")
     assert "generate_error" in response.trace
     assert response.trace[-1] == "fallback_extractive"
+
+
+def test_agentic_workflow_returns_only_citations_used_by_answer() -> None:
+    knowledge = FirmwareKnowledgeService(
+        PROJECT_ROOT / "data/sample/sources.json"
+    )
+    expected = knowledge.search(
+        "FreeRTOS 周期任务为什么适合用 vTaskDelayUntil？",
+        top_k=3,
+    ).hits[2].chunk.id
+    service = AgenticRagService(knowledge, ThirdCitationGenerator())
+
+    response = service.answer(
+        "FreeRTOS 周期任务为什么适合用 vTaskDelayUntil？",
+        top_k=3,
+    )
+
+    assert response.answer == "只使用第三条检索证据。【1】"
+    assert [citation.chunk_id for citation in response.citations] == [expected]
 
 
 def test_ollama_generator_renders_structured_claim_citations() -> None:

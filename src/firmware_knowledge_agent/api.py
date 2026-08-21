@@ -111,7 +111,7 @@ def create_app(
 
     app = FastAPI(
         title="Firmware Knowledge Agent API",
-        version="1.0.0",
+        version="1.0.1",
         lifespan=lifespan,
     )
     app.mount(

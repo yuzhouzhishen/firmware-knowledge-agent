@@ -8,6 +8,24 @@ const state = {
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 
+const PUBLIC_SAMPLE_QUESTIONS = [
+  {
+    sourceId: "esp-idf-wifi-events",
+    label: "Wi-Fi 重连",
+    question: "ESP-IDF Wi-Fi 断开后如何重连，何时可以创建 socket？",
+  },
+  {
+    sourceId: "esp-idf-nvs",
+    label: "NVS 提交",
+    question: "NVS 写入后为什么要调用 nvs_commit？",
+  },
+  {
+    sourceId: "freertos-task-delay",
+    label: "周期任务",
+    question: "FreeRTOS 周期任务为什么适合使用 xTaskDelayUntil？",
+  },
+];
+
 document.addEventListener("DOMContentLoaded", () => {
   bindViews();
   bindChat();
@@ -27,6 +45,7 @@ async function refreshWorkspace() {
     state.evaluations = evaluations;
     renderRuntime();
     renderCorpus();
+    renderSuggestions(corpus.items);
     renderEvaluations();
   } catch (error) {
     $("#health-dot").className = "status-dot error";
@@ -167,6 +186,24 @@ function renderRuntime() {
   $("#source-count").textContent = health.sources;
   $("#chunk-count").textContent = health.chunks;
   $("#retriever-mode").textContent = health.retriever;
+}
+
+function renderSuggestions(items) {
+  const sourceIds = new Set(items.map((item) => item.source_id));
+  const sampleQuestions = PUBLIC_SAMPLE_QUESTIONS.filter((item) =>
+    sourceIds.has(item.sourceId)
+  );
+  if (sampleQuestions.length < 2) {
+    return;
+  }
+  $$(".suggestions button").forEach((button, index) => {
+    const suggestion = sampleQuestions[index];
+    button.hidden = !suggestion;
+    if (suggestion) {
+      button.textContent = suggestion.label;
+      button.dataset.question = suggestion.question;
+    }
+  });
 }
 
 function renderCorpus() {
